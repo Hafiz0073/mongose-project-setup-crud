@@ -1,14 +1,12 @@
 import express, { Request, Response } from 'express';
-import { Product } from './product.model';
+import { ProductController } from './product.controller';
 
 const router = express.Router();
-router.post('/', async (req: Request, res: Response) => {
-  const result = await Product.create(req.body);
-  res.json({
-    success: true,
-    message: 'Product created successfully!',
-    data: result,
-  });
-  console.log(result);
-});
+//create route
+router.post('/', ProductController.createProduct);
+
+//get all products route
+router.get('/', ProductController.getAllProducts);
+//get single product route
+router.get('/:productId', ProductController.getSingleProductbyId);
 export const ProductRouter = router;
