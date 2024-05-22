@@ -1,9 +1,12 @@
 import { Response, Request } from 'express';
 import { ProductServices } from './product.service';
+import productSchema from './product.validation';
 
 const createProduct = async (req: Request, res: Response) => {
   try {
     const productData = req.body;
+    const { error } = productSchema.validate(productData);
+    console.log(error);
 
     //will all service function to send this data
     const result = await ProductServices.createProduct(productData);
@@ -13,11 +16,11 @@ const createProduct = async (req: Request, res: Response) => {
       message: 'Product created successfully',
       data: result,
     });
-  } catch (err: any) {
+  } catch (error: any) {
     res.status(500).json({
       success: false,
       message: 'Could not create Product!',
-      error: err,
+      error: error.details,
     });
   }
 };
@@ -38,7 +41,7 @@ const getAllProducts = async (req: Request, res: Response) => {
     });
   }
 };
-//get all product
+//get single product
 const getSingleProductbyId = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
@@ -57,8 +60,28 @@ const getSingleProductbyId = async (req: Request, res: Response) => {
     });
   }
 };
+//update one  product name
+const updateProductbyId = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+
+    const result = await ProductServices.updateSingleProductbyId(productId);
+    res.status(200).json({
+      success: true,
+      message: 'Product update successfully',
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: 'Could not found product data!',
+      error: err,
+    });
+  }
+};
 export const ProductController = {
   createProduct,
   getAllProducts,
   getSingleProductbyId,
+  updateProductbyId,
 };
