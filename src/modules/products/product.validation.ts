@@ -30,7 +30,7 @@ const productSchema = Joi.object({
   description: Joi.string().required().messages({
     'string.empty': 'Description is Required',
   }),
-  price: Joi.number().required().messages({
+  price: Joi.number().precision(2).required().messages({
     'number.base': 'Price must be a number',
     'any.required': 'Price is Required',
   }),
@@ -43,7 +43,7 @@ const productSchema = Joi.object({
     'any.required': 'Inventory is Required',
   }),
 });
-const productsSchema = Joi.array().items(productSchema).messages({
-  'array.base': 'Products must be an array of product objects',
-});
-export default productsSchema;
+// const productsSchema = Joi.array().items(productSchema).messages({
+//   'array.base': 'Products must be an array of product objects',
+// });
+export default productSchema;
