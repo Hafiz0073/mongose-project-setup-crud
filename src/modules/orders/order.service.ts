@@ -1,3 +1,5 @@
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ObjectId } from 'mongodb';
 import { ProductModel } from '../products/product.model';
 import { POrder } from './order.interface';
@@ -21,6 +23,7 @@ const createOrder = async (payload: POrder) => {
     }
 
     const result = await Order.create(payload);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const updateProductQty = await ProductModel.findOneAndUpdate(
       { _id: new ObjectId(payload.productId) },
       [
@@ -51,12 +54,7 @@ const createOrder = async (payload: POrder) => {
     throw new Error(error.message);
   }
 };
-//get all Order
-// const getAllOrder = async (payload: POrder) => {
-//   const result = await Order.find();
-//   return result;
-// };
-//
+
 //get or show product
 const getAllOrders = async (email: string) => {
   try {

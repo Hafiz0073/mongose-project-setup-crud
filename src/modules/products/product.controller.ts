@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Response, Request } from 'express';
 import { ProductServices } from './product.service';
-import productSchema from './product.validation';
 
 const createProduct = async (req: Request, res: Response) => {
   try {
@@ -38,9 +38,7 @@ const getAllProducts = async (req: Request, res: Response) => {
     const result = await ProductServices.getAllProducts(searchTerm);
     res.status(200).json({
       success: true,
-      message:
-        `Products matching search term ${searchTerm} fetched successfully!` ||
-        'Product Found Successfully',
+      message: `Products matching search term ${searchTerm} fetched successfully!`,
       data: result,
     });
   } catch (err: unknown) {

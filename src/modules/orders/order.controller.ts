@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { OrderServices } from './order.service';
 import { Response, Request } from 'express';
 

@@ -9,7 +9,7 @@ const createProduct = async (payload: TProduct) => {
 //get or show product|| search section
 const getAllProducts = async (searchTerm: string) => {
   let products;
-  let searchRegex = new RegExp(searchTerm, 'i');
+  const searchRegex = new RegExp(searchTerm, 'i');
   if (searchTerm) {
     products = await ProductModel.find({
       $or: [{ name: searchRegex }, { description: searchRegex }],
