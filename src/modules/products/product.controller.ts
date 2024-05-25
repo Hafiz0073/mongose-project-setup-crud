@@ -5,10 +5,7 @@ import productSchema from './product.validation';
 const createProduct = async (req: Request, res: Response) => {
   try {
     const productData = req.body;
-    // const { error } = productSchema.validate(productData);
-    // console.log(error);
 
-    //will all service function to send this data
     const result = await ProductServices.createProduct(productData);
     // if (error)
     //   res.status(500).json({

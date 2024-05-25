@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-import { MongoClient, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import { ProductModel } from '../products/product.model';
 import { POrder } from './order.interface';
 import { Order } from './order.model';
@@ -47,24 +46,34 @@ const createOrder = async (payload: POrder) => {
       ],
       { returnOriginal: false, new: true },
     );
-    // const updateProductQty = await ProductModel.findOneAndUpdate(
-    //   { _id: new ObjectId(payload.productId) },
-    //   { $inc: { 'inventory.quantity': -payload.quantity } },
-    //   { returnOriginal: false },
-    // );
-    // if (updateProductQty.inventory.quantity === 0) {
-    //   await ProductModel.updateOne(
-    //     { _id: new ObjectId(payload.productId) },
-    //     { $set: { 'inventory.inStock': false } },
-    //   );
-    // }
     return result;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+//get all Order
+// const getAllOrder = async (payload: POrder) => {
+//   const result = await Order.find();
+//   return result;
+// };
+//
+//get or show product
+const getAllOrders = async (email: string) => {
+  try {
+    let orders;
+    let orderEmail = email;
 
-    // return savedOrder;
+    if (email) {
+      orders = await Order.find({ email: { $in: [orderEmail] } });
+    } else {
+      orders = await Order.find();
+    }
+    return orders;
   } catch (error: any) {
     throw new Error(error.message);
   }
 };
 export const OrderServices = {
   createOrder,
+  getAllOrders,
 };

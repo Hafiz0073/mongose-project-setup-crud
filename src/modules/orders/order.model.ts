@@ -1,4 +1,3 @@
-import { number, string } from 'joi';
 import { POrder } from './order.interface';
 import { Schema, model } from 'mongoose';
 
