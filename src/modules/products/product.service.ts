@@ -25,14 +25,13 @@ const getSingleProductbyId = async (id: string) => {
   return result;
 };
 //update one  product
-const updateSingleProductbyId = async (_id: string) => {
+const updateSingleProductbyId = async (_id: string, name: string) => {
   const result = await ProductModel.findOneAndUpdate(
     { _id },
-    { $set: { name: 'xiomi' } },
+    { $set: { name: name } },
     {
       new: true,
       useFindAndModify: false,
-      upsert: true, // Make this update into an upsert
     },
   );
   return result;

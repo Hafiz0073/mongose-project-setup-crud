@@ -27,6 +27,7 @@ const inventorySchema = new Schema<TInventory>({
 const productSchema = new Schema<TProduct>({
   name: {
     type: String,
+    unique: true,
     required: [true, 'Name is Required'],
   },
   description: {
