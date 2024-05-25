@@ -5,7 +5,10 @@ import productSchema from './product.validation';
 const createProduct = async (req: Request, res: Response) => {
   try {
     const productData = req.body;
+    // const { error } = productSchema.validate(productData);
+    // console.log(error);
 
+    //will all service function to send this data
     const result = await ProductServices.createProduct(productData);
     // if (error)
     //   res.status(500).json({
@@ -31,10 +34,13 @@ const createProduct = async (req: Request, res: Response) => {
 const getAllProducts = async (req: Request, res: Response) => {
   try {
     const { searchTerm }: any = req.query;
+
     const result = await ProductServices.getAllProducts(searchTerm);
     res.status(200).json({
       success: true,
-      message: 'Product found successfully',
+      message:
+        `Products matching search term ${searchTerm} fetched successfully!` ||
+        'Product Found Successfully',
       data: result,
     });
   } catch (err: unknown) {

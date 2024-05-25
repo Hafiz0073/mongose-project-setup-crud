@@ -1,49 +1,31 @@
-import Joi from 'joi';
+import { z } from 'zod';
 
-// Variant schema
-const variantSchema = Joi.object({
-  type: Joi.string().required().messages({
-    'string.empty': 'Type is Required',
-  }),
-  value: Joi.string().required().messages({
-    'string.empty': 'Value is Required',
-  }),
+// Define the Zod schema for TVariants
+const TVariantsSchema = z.object({
+  type: z.string(),
+  value: z.string(),
 });
 
-// Inventory schema
-const inventorySchema = Joi.object({
-  quantity: Joi.number().required().messages({
-    'number.base': 'Quantity must be a number',
-    'any.required': 'Quantity is Required',
-  }),
-  inStock: Joi.boolean().required().messages({
-    'boolean.base': 'InStock must be a boolean',
-    'any.required': 'InStock is Required',
-  }),
+// Define the Zod schema for TInventory
+const TInventorySchema = z.object({
+  quantity: z.number().min(0), // Assuming quantity cannot be negative
+  inStock: z.boolean(),
 });
 
-// Product schema
-const productSchema = Joi.object({
-  name: Joi.string().required().messages({
-    'string.empty': 'Name is Required',
-  }),
-  description: Joi.string().required().messages({
-    'string.empty': 'Description is Required',
-  }),
-  price: Joi.number().precision(2).required().messages({
-    'number.base': 'Price must be a number',
-    'any.required': 'Price is Required',
-  }),
-  category: Joi.string().required().messages({
-    'string.empty': 'Category is Required',
-  }),
-  tags: Joi.array().items(Joi.string()).optional(),
-  variants: Joi.array().items(variantSchema).optional(),
-  inventory: inventorySchema.required().messages({
-    'any.required': 'Inventory is Required',
-  }),
+// Define the Zod schema for TProduct
+const TProductSchema = z.object({
+  name: z.string(),
+  description: z.string(),
+  price: z.number().positive(), // Assuming price must be a positive number
+  category: z.string(),
+  tags: z.array(z.string()),
+  variants: z.array(TVariantsSchema), // Using array instead of tuple to allow for multiple variants
+  inventory: TInventorySchema,
 });
-// const productsSchema = Joi.array().items(productSchema).messages({
-//   'array.base': 'Products must be an array of product objects',
-// });
-export default productSchema;
+
+// Exporting the inferred types from Zod schemas
+
+export default TProductSchema;
+
+// Example usage:
+// const parsedData = TProductSchema.parse(data); // This will throw if data is invalid

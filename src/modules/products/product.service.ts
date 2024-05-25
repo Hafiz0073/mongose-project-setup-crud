@@ -6,7 +6,7 @@ const createProduct = async (payload: TProduct) => {
   return result;
 };
 
-//get or show product
+//get or show product|| search section
 const getAllProducts = async (searchTerm: string) => {
   let products;
   let searchRegex = new RegExp(searchTerm, 'i');
