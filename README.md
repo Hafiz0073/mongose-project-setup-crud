@@ -1,4 +1,4 @@
-We can create CRUD Model some steps
+We can create CRUD Model following some steps
 
 Need to install some Depenencies
 Cors
